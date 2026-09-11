@@ -2,7 +2,7 @@
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
 /* date : 11-09-2026 */
 /* version: 1.0 */
-/* compile: gcc -std=c99 -Wall -pedantic hello.c */
+/* compile: gcc -std=c99 -Wall -pedantic hello.c -o hello */
 
 /* Description:
     Prints "Hello World!"
