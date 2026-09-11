@@ -2,7 +2,7 @@
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
 /* date : 11-09-2026 */
 /* version: 1.0 */
-/* compile: gcc -std=c99 -Wall -pedantic paper.c */
+/* compile: gcc -std=c99 -Wall -pedantic paper.c -o paper */
 
 /* Description:
     Calculates number of packs needed for exam papers
@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
   int pages_total = exams_num * sheets_per_exam;
   int packs_needed = 0;
 
-  // calc
-  if (pages_per_pack > 0) {
+  // calculate packs needed
+  if (pages_per_pack > 0) { // packages need to actually have pages
     packs_needed = (pages_total + pages_per_pack - 1) /
                    pages_per_pack; // Ceiling [a, b] is [a + b - 1] // b
   }

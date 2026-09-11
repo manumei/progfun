@@ -2,7 +2,7 @@
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
 /* date : FIXME: */
 /* version: FIXME: */
-/* compile: gcc -std=c99 -Wall -pedantic FIXME:.c */
+/* compile: gcc -std=c99 -Wall -pedantic FIXME:.c -o FIXME: */
 
 /* Description:
     FIXME:
