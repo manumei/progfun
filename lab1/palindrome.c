@@ -31,7 +31,7 @@ int is_palindromable(int num) {
   int d2 = (num / 10) % 10;
   int d3 = num % 10;
 
-  if ((d3 != 0) && (d1 == d3 || d1 == d2 || d2 == d3)) {
+  if ((d1 == d3 && (d3 != 0)) || (d2 == d3 && (d3 != 0)) || d1 == d2) {
     return 1;
   } else {
     return 0;
