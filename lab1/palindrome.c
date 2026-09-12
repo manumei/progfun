@@ -19,21 +19,17 @@ int main(int argc, char *argv[]) {
   int num;
   scanf("%d", &num);
 
-  int palindrome_approved = is_palindromable(num);
-  printf("%s\n", palindrome_approved ? "YES" : "NO");
-
-  return 0;
-}
-
-int is_palindromable(int num) {
-  // reverse the number
   int d1 = (num / 100) % 10;
   int d2 = (num / 10) % 10;
   int d3 = num % 10;
 
+  int palindrome_approved;
   if ((d1 == d3 && (d3 != 0)) || (d2 == d3 && (d3 != 0)) || d1 == d2) {
-    return 1;
+    palindrome_approved = 1;
   } else {
-    return 0;
+    palindrome_approved = 0;
   }
+  printf("%s\n", palindrome_approved ? "YES" : "NO");
+
+  return 0;
 }
