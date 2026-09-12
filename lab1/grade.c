@@ -19,11 +19,20 @@ int main(int argc, char *argv[]) {
   scanf("%d %d %d", &g1, &g2, &g3);
   scanf("%d %d %d", &w1, &w2, &w3);
 
-  float grade = (g1 * w1 + g2 * w2 + g3 * w3) / 100;
+  // weighted average
+  double grade = (g1 * w1 + g2 * w2 + g3 * w3) / 100.0;
 
+  // round to nearest 0.5 --> multiply by 2, round to nearest int, divide by 2
   grade = 2 * grade;
-  float rounded = roundf(grade) / 2.0f;
-  return rounded;
+  double rounded = round(grade) / 2.0;
+
+  if (rounded == 5.5) {
+    rounded = 6.0;
+  }
+
+  // print with %g to print float but remove trailing zeros (error if "6.0" when
+  // answer is "6")
+  printf("%g\n", rounded);
 
   return 0;
 }
