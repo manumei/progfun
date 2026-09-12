@@ -15,6 +15,8 @@ int main(int argc, char *argv[]) {
   int q1r, q2r;  // rows
   scanf("%c%d %c%d", &q1c, &q1r, &q2c, &q2r);
 
+  char *attackable; // string for answer
+
   // convert columns to 1-8 range (with ascii, since theyre consecutive in the
   // ascii table)
   q1c = q1c - 'a' + 1; // +1 so a is 1
@@ -22,16 +24,17 @@ int main(int argc, char *argv[]) {
 
   // can attack? same col OR same row OR same diagonal
   if (q1c == q2c) {
-    printf("YES");
+    attackable = "YES";
   } else if (q1r == q2r) {
-    printf("YES");
+    attackable = "YES";
   } // they're in the same diagonal when the absolute distance between cols is
     // the same as the absolute distance between rows
   else if (abs(q1c - q2c) == abs(q1r - q2r)) {
-    printf("YES");
+    attackable = "YES";
   } else {
-    printf("NO");
+    attackable = "NO";
   }
+  printf("%s\n", attackable);
 
   return 0;
 }
