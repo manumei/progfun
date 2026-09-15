@@ -11,6 +11,6 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-  printf("Hallo world!\n");
+  printf("Hallo Welt!\n");
   return 0;
 }
