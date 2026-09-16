@@ -14,6 +14,11 @@ int main(int argc, char *argv[]) {
   int num;
   scanf("%d", &num);
 
+  if (num == 0) {
+    printf("%s\n", "YES");
+    return 0;
+  }
+
   int digit_suma = 0; // adding 0 changes nothing
   int digit_prod = 1; // multiplying by 1 changes nothing
 
