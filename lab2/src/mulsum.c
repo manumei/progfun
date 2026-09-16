@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
   }
 
   char *result = (digit_suma == digit_prod) ? "YES" : "NO";
+  printf("%s\n", result);
 
   return 0;
 }
