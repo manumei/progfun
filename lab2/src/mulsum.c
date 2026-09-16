@@ -14,6 +14,10 @@ int main(int argc, char *argv[]) {
   int num;
   scanf("%d", &num);
 
+  // first gotta check n==0, otherwise rest of my stuff breaks cause I gotta
+  // check n>0 to get the digits, so n=0 doesnt go into my loop, doesnt do the
+  // addition and multiplication, and the final if will check that 0=1 which is
+  // false, but 0 is indeed a mulsum number (0=0)
   if (num == 0) {
     printf("%s\n", "YES");
     return 0;
@@ -29,6 +33,7 @@ int main(int argc, char *argv[]) {
     digit_prod *= digit; // multiply by each digit in the loop
   }
 
+  // check if sum of digits and product of digits are equal
   char *result = (digit_suma == digit_prod) ? "YES" : "NO";
   printf("%s\n", result);
 
