@@ -12,6 +12,8 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-  printf("Hallo Welt!\n");
+  unsigned int n;
+  scanf("%d", &n);
+
   return 0;
 }
