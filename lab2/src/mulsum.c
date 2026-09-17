@@ -1,10 +1,10 @@
 /* file : mulsum.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : 16-09-2026 */
+/* date : 17-09-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic mulsum.c -o mulsum */
 
 /* Description:
-    TODO:
+    Prints whether a number is mulsum (sum of digits equals product of digits)
 */
 
 #include <stdio.h>
