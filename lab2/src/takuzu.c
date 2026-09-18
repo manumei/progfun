@@ -1,6 +1,6 @@
 /* file : takuzu.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : 17-09-2026 */
+/* date : 18-09-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic takuzu.c -o takuzu */
 
 /* Description:
