@@ -50,9 +50,9 @@ int main(int argc, char *argv[]) {
   }
 
   if (num_gcd > 1) {
-    printf("YES");
+    printf("YES\n");
   } else {
-    printf("NO");
+    printf("NO\n");
   }
 
   return 0;
