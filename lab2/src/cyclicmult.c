@@ -21,6 +21,39 @@ int gcd(int a, int b) {
 }
 
 int main(int argc, char *argv[]) {
-  printf("Hallo Welt!\n");
+  // input
+  int num;
+  scanf("%d", &num);
+  int num_gcd = num; // starrting out, gcd(a) = a
+
+  int scale = 1; // up to what power of 10
+  int digits = 1;
+
+  // get how many digits it has
+  while (num / scale >= 10) {
+    scale *= 10;
+    digits++;
+  }
+
+  // iterate through the digits to cycle
+  for (int i = 0; i < digits; i++) {
+    int first_digit = num / scale;
+    // num % scale removes the first digit
+    // multiply by 10 moves the other digits one place to the left
+    // adding first_digit moves that to the right side
+    // abcd becomes -> bcd*10+a = bcda
+    num = (num % scale) * 10 + first_digit;
+
+    // each round I want gcd(new_num, aux_cpy) where num_gcd gets updated to be
+    // the gcd of the previous round, since gcd(a, b, c) = gcd(gcd(a,b), c)
+    num_gcd = gcd(num_gcd, num);
+  }
+
+  if (num_gcd > 1) {
+    printf("YES");
+  } else {
+    printf("NO");
+  }
+
   return 0;
 }
