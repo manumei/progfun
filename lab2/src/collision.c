@@ -4,7 +4,10 @@
 /* compile: gcc -std=c99 -Wall -pedantic collision.c -o collision */
 
 /* Description:
-    TODO:
+    Given a number M and two starting values p and q, find if p and q will be
+   equal as they are updated each step by p=(2*p+1) mod M and q=(3*q+1) mod M.
+   Print number of steps and their value if they collide, otherwise print "No
+   collision"
 */
 
 #include <stdio.h>
@@ -15,10 +18,10 @@ int main(int argc, char *argv[]) {
   int M, p, q;
   int step = 0;
   scanf("%d %d %d", &M, &p, &q);
-  int max_steps = M * 6; // because there are at max (M * LCM(2,3)) outcomes
+  int maxSteps = M * 6; // because there are at max (M * LCM(2,3)) outcomes
   // since p changes by factor of 2 and q changes by factor of 3
 
-  while ((p != q) && (step < max_steps)) {
+  while ((p != q) && (step < maxSteps)) {
     // Take Step
     p = (2 * p + 1) % M;
     q = (3 * q + 1) % M;

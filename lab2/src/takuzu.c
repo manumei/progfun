@@ -16,26 +16,26 @@ int main(int argc, char *argv[]) {
   scanf("%u", &n);
 
   // aux counters
-  int cons_zeros = 0;
-  int cons_ones = 0;
+  int consZeros = 0;
+  int consOnes = 0;
 
   // count digits
-  while ((n > 0) && (cons_zeros < 3) && (cons_ones < 3)) {
+  while ((n > 0) && (consZeros < 3) && (consOnes < 3)) {
     unsigned int digit = n % 2; // they are in reverse but doesn't matter
     n /= 2;                     // keep going down binary bases until 0
 
     // if it's a zero, reset consecutive 1s and add one to the 0s
     if (digit == 0) {
-      cons_zeros++;
-      cons_ones = 0;
+      consZeros++;
+      consOnes = 0;
     } else { // viceversa if it's a 1
-      cons_zeros = 0;
-      cons_ones++;
+      consOnes++;
+      consZeros = 0;
     }
   }
 
   // takuzu if it doesnt have 3 consecutives
-  if ((cons_zeros == 3) || (cons_ones == 3)) {
+  if ((consZeros == 3) || (consOnes == 3)) {
     printf("%s\n", "NO");
   } else {
     printf("%s\n", "YES");

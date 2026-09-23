@@ -23,18 +23,18 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  int digit_suma = 0; // adding 0 changes nothing
-  int digit_prod = 1; // multiplying by 1 changes nothing
+  int digitSuma = 0; // adding 0 changes nothing
+  int digitProd = 1; // multiplying by 1 changes nothing
 
   // extract digits
   for (; num > 0; num /= 10) {
     int digit = num % 10;
-    digit_suma += digit; // add each digit in the loop
-    digit_prod *= digit; // multiply by each digit in the loop
+    digitSuma += digit; // add each digit in the loop
+    digitProd *= digit; // multiply by each digit in the loop
   }
 
   // check if sum of digits and product of digits are equal
-  char *result = (digit_suma == digit_prod) ? "YES" : "NO";
+  char *result = (digitSuma == digitProd) ? "YES" : "NO";
   printf("%s\n", result);
 
   return 0;
