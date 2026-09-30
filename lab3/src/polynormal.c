@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void coef_print_first(int a, int i);
-void coef_print_nonfirst(int a, int i);
+void coefPrintFirst(int a, int i);
+void coefPrintNonFirst(int a, int i);
 
 int main(int argc, char *argv[]) {
   int coeff[101] = {0}; // up to 100 degrees
@@ -27,10 +27,17 @@ int main(int argc, char *argv[]) {
       break;
     }
 
-    if (c == 'x') { // x shows up, means prev %d is coefficient and next %d
-                    // after ^ is the exponential
-      scanf("^%d", &exp);
-      coeff[exp] += base;
+    if (c == 'x') {
+    char next;
+    scanf("%c", &next);
+
+    if (next == '^') { // power
+        scanf("%d", &exp);
+    } else { // it's just a lone x, meaning power of 1
+        exp = 1;
+        ungetc(next, stdin); // accidentally grabbed the operator
+    }
+    coeff[exp] += base;
     } else { // no x, means it's just a coefficient a
       coeff[0] += base;
 
@@ -42,40 +49,72 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  bool first_print = true;
+  bool emptyInput = true;
+  bool firstPrint = true;
 
-  for (int i = 100; i > 0; i--) {
+  for (int i = 100; i > 1; i--) {
     int a = coeff[i];
     if (a != 0) {
       // dont print + for first number
-      if (first_print) {
-        coef_print_first(a, i);
-        first_print = false;
+      if (firstPrint) {
+        coefPrintFirst(a, i);
+        firstPrint = false;
+        emptyInput = false;
       } else {
-        coef_print_nonfirst(a, i);
+        coefPrintNonFirst(a, i);
+        emptyInput = false;
       }
     }
   }
 
-  int zero_coef = coeff[0];
-  if (zero_coef) {
-    if (first_print) {
-      printf("%d", zero_coef);
+  // special case: for coef 1, print just x, no exponent
+  // special case: for coef 0, print just the number, no x
+  int oneCoef = coeff[1];
+  int absOneCoef = abs(oneCoef);
+  if (oneCoef) {
+    if (firstPrint) {
+      if (absOneCoef == 1) {
+        printf("%sx", (oneCoef < 0) ? "-" : "");
+      } else {
+        printf("%dx", oneCoef);
+      }
+      emptyInput = false;
     } else {
-      char op = (zero_coef > 0) ? '+' : '-';
-      printf("%c%d", op, abs(zero_coef));
+      char op = (oneCoef > 0) ? '+' : '-';
+      if (absOneCoef == 1) {
+        printf("%cx", op);
+      } else {
+        printf("%c%dx", op, absOneCoef);
+      }
+      emptyInput = false;
     }
   }
 
+  // special case: for coef 0, print just the number, no x
+  int zeroCoef = coeff[0];
+  if (zeroCoef) {
+    if (firstPrint) {
+      printf("%d", zeroCoef);
+      emptyInput = false;
+    } else {
+      char op = (zeroCoef > 0) ? '+' : '-';
+      printf("%c%d", op, abs(zeroCoef));
+      emptyInput = false;
+    }
+  }
+
+  if (emptyInput) {
+    printf("0");
+  }
   printf("\n");
 }
 
-void coef_print_first(int a, int i) {
+void coefPrintFirst(int a, int i) {
   // first gets no +
-  int abs_a = abs(a);
+  int absA = abs(a);
   bool neg = (a < 0);
   // if 1, dont print the coef 1
-  if (abs_a == 1) {
+  if (absA == 1) {
     if (neg) {
       printf("-x^%d", i);
     } else {
@@ -83,23 +122,23 @@ void coef_print_first(int a, int i) {
     }
   } else { // otherwise print coefficient a, but not the +
     if (neg) {
-      printf("-%dx^%d", abs_a, i);
+      printf("-%dx^%d", absA, i);
     } else {
-      printf("%dx^%d", abs_a, i);
+      printf("%dx^%d", absA, i);
     }
   }
   return;
 }
 
-void coef_print_nonfirst(int a, int i) {
-  int abs_a = abs(a);
+void coefPrintNonFirst(int a, int i) {
+  int absA = abs(a);
   char op = (a > 0) ? '+' : '-';
 
   // if 1, dont print the coef 1
-  if (abs_a == 1) {
+  if (absA == 1) {
     printf("%cx^%d", op, i);
   } else { // otherwise print coefficient a
-    printf("%c%dx^%d", op, abs_a, i);
+    printf("%c%dx^%d", op, absA, i);
   }
   return;
 }
