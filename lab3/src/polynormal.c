@@ -13,8 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void coefPrintFirst(int a, int i);
-void coefPrintNonFirst(int a, int i);
+void printPoly(int coeff[]);
 
 int main(int argc, char *argv[]) {
   int coeff[101] = {0}; // up to 100 degrees
@@ -59,97 +58,33 @@ int main(int argc, char *argv[]) {
     }
     coeff[exp] += sign * coef;
   }
+  printPoly(coeff);
+  return 0;
+}
 
-  bool emptyInput = true;
-  bool firstPrint = true;
-
-  for (int i = 100; i > 1; i--) {
+void printPoly(int coeff[]) {
+  bool first = true;
+  for (int i = 100; i >= 0; i--) {
     int a = coeff[i];
-    if (a != 0) {
-      // dont print + for first number
-      if (firstPrint) {
-        coefPrintFirst(a, i);
-        firstPrint = false;
-        emptyInput = false;
-      } else {
-        coefPrintNonFirst(a, i);
-        emptyInput = false;
-      }
-    }
-  }
+    if (a == 0)
+      continue;
 
-  // special case: for coef 1, print just x, no exponent
-  // special case: for coef 0, print just the number, no x
-  int oneCoef = coeff[1];
-  int absOneCoef = abs(oneCoef);
-  if (oneCoef) {
-    if (firstPrint) {
-      if (absOneCoef == 1) {
-        printf("%sx", (oneCoef < 0) ? "-" : "");
-      } else {
-        printf("%dx", oneCoef);
-      }
-      emptyInput = false;
-    } else {
-      char op = (oneCoef > 0) ? '+' : '-';
-      if (absOneCoef == 1) {
-        printf("%cx", op);
-      } else {
-        printf("%c%dx", op, absOneCoef);
-      }
-      emptyInput = false;
+    if (a < 0) {
+      printf("-");
+    } else if (!first) {
+      printf("+");
     }
-  }
 
-  // special case: for coef 0, print just the number, no x
-  int zeroCoef = coeff[0];
-  if (zeroCoef) {
-    if (firstPrint) {
-      printf("%d", zeroCoef);
-      emptyInput = false;
-    } else {
-      char op = (zeroCoef > 0) ? '+' : '-';
-      printf("%c%d", op, abs(zeroCoef));
-      emptyInput = false;
-    }
-  }
+    if (abs(a) != 1 || i == 0)
+      printf("%d", abs(a)); // hide 1, except for constants
+    if (i >= 1)
+      printf("x");
+    if (i >= 2)
+      printf("^%d", i);
 
-  if (emptyInput) {
-    printf("0");
+    first = false;
   }
+  if (first)
+    printf("0"); // nothing was printed
   printf("\n");
-}
-
-void coefPrintFirst(int a, int i) {
-  // first gets no +
-  int absA = abs(a);
-  bool neg = (a < 0);
-  // if 1, dont print the coef 1
-  if (absA == 1) {
-    if (neg) {
-      printf("-x^%d", i);
-    } else {
-      printf("x^%d", i);
-    }
-  } else { // otherwise print coefficient a, but not the +
-    if (neg) {
-      printf("-%dx^%d", absA, i);
-    } else {
-      printf("%dx^%d", absA, i);
-    }
-  }
-  return;
-}
-
-void coefPrintNonFirst(int a, int i) {
-  int absA = abs(a);
-  char op = (a > 0) ? '+' : '-';
-
-  // if 1, dont print the coef 1
-  if (absA == 1) {
-    printf("%cx^%d", op, i);
-  } else { // otherwise print coefficient a
-    printf("%c%dx^%d", op, absA, i);
-  }
-  return;
 }

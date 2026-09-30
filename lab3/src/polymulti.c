@@ -11,11 +11,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-void update_coefs(int coeffs_pol[], int *c) {
+void updateCoefs(int coeffsPol[], int *c) {
   // polynomials close with )
   while (*c != ')') {
-
     // get the sign
     int sign = 1; // default cause skipped in first if +
     if (*c == '+' || *c == '-') {
@@ -24,7 +24,6 @@ void update_coefs(int coeffs_pol[], int *c) {
       }
       *c = getchar();
     }
-
     // get the coefficient
     bool hasDigits = false;
     int coef = 0;
@@ -51,19 +50,47 @@ void update_coefs(int coeffs_pol[], int *c) {
     }
 
     // record final value
-    coeffs_pol[exp] += sign * coef;
-    *c = getchar();
+    coeffsPol[exp] += sign * coef;
   }
   return;
 }
 
+void printPoly(int coeff[], int size) {
+  bool first = true;
+  for (int i = size; i >= 0; i--) {
+    int a = coeff[i];
+    if (a == 0)
+      continue;
+
+    if (a < 0) {
+      printf("-");
+    } else if (!first) {
+      printf("+");
+    }
+
+    if (abs(a) != 1 || i == 0)
+      printf("%d", abs(a)); // hide 1, except for constants
+    if (i >= 1)
+      printf("x");
+    if (i >= 2)
+      printf("^%d", i);
+
+    first = false;
+  }
+  if (first)
+    printf("0"); // nothing was printed
+  printf("\n");
+}
+
 int main(int argc, char *argv[]) {
-  int coeffs_prod[201] = {0}; // up to 200 degrees (100+100)
-  int coeffs_pol1[101] = {0}; // up to 100
-  int coeffs_pol2[101] = {0};
-  int c = getchar(); // the first '('
+  int coeffsProd[201] = {0}; // up to 200 degrees (100+100)
+  int coeffsPol1[101] = {0}; // up to 100
+  int coeffsPol2[101] = {0};
+  int c = getchar();
+  c = getchar(); // skip first '('
 
   // 1st polynomial
+  updateCoefs(coeffsPol1, &c); // fill in the first polynomial's coefficients
 
   // get through the multiplication
   c = getchar();
@@ -79,11 +106,24 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  // pol 2, repeat process
-  while (c != ')') {
-    // update pol1 coeffs
-    c = getchar();
+  // 2nd polynomial
+  updateCoefs(coeffsPol2, &c); // fill in the first polynomial's coefficients
+
+  // multiplication
+  for (int i = 100; i >= 0; i--) {
+    int coef1 = coeffsPol1[i];
+    if (coef1) { // if not zero
+      for (int j = 100; j >= 0; j--) {
+        int coef2 = coeffsPol2[j];
+        if (coef2) { // if not zero
+          int newExp = i + j;
+          int newCoef = coef1 * coef2;
+          coeffsProd[newExp] += newCoef;
+        }
+      }
+    }
   }
 
+  printPoly(coeffsProd, 200);
   return 0;
 }
