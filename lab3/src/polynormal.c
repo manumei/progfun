@@ -8,6 +8,7 @@
    exponents.
 */
 
+#include <ctype.h> // for isdigit
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,35 +19,45 @@ void coefPrintNonFirst(int a, int i);
 int main(int argc, char *argv[]) {
   int coeff[101] = {0}; // up to 100 degrees
 
-  int base, exp;
-  char c;
-
-  while (scanf("%d", &base) == 1) {
-    if (scanf("%c", &c) != 1) { // end
-      coeff[0] += base;         // no power, just a*x⁰ = a
-      break;
+  int c = getchar(); // cant use scanf cause x might or might not come with a
+                     // coef (so at beginning or after operator I cant know if
+                     // next is %c or %d)
+  while (c != EOF && c != '\n') {
+    int sign = 1; // default cause skipped in first
+    if (c == '+' || c == '-') {
+      if (c == '-') {
+        sign = -1;
+      }
+      c = getchar();
     }
 
+    int coef = 0;
+    bool hasDigits = false;
+    while (isdigit(c)) {
+      // since cant use scanf, have to manually check for digits
+      coef = coef * 10 + (c - '0'); // units, tens, hundreds, etc,
+                                    // (c - '0') converts digit char to int
+                                    // cause theyre consecutive in ascii
+      hasDigits = true;
+      c = getchar();
+    }
+    if (!hasDigits)
+      coef = 1; // implicit coefficient: "x^5", "-x"
+
+    int exp = 0; // no x: constant term
     if (c == 'x') {
-    char next;
-    scanf("%c", &next);
-
-    if (next == '^') { // power
-        scanf("%d", &exp);
-    } else { // it's just a lone x, meaning power of 1
-        exp = 1;
-        ungetc(next, stdin); // accidentally grabbed the operator
-    }
-    coeff[exp] += base;
-    } else { // no x, means it's just a coefficient a
-      coeff[0] += base;
-
-      if (c !=
-          '\n') { // if it's not the end, and the %c saw no x, that means it
-        // grabbed the next number's operator, so gotta drop it
-        ungetc(c, stdin);
+      exp = 1; // lone x
+      c = getchar();
+      if (c == '^') {
+        exp = 0;
+        c = getchar();
+        while (isdigit(c)) {
+          exp = exp * 10 + (c - '0');
+          c = getchar();
+        }
       }
     }
+    coeff[exp] += sign * coef;
   }
 
   bool emptyInput = true;
