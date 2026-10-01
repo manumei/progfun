@@ -1,17 +1,16 @@
 /* file : polymulti.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : TODO: */
+/* date : 30-09-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic polymulti.c -o polymulti */
 
 /* Description:
-    TODO:
+    Multiply two polynomials
 */
 
 #include <ctype.h> // for isdigit
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 void updateCoefs(int coeffsPol[], int *c) {
   // polynomials close with )
