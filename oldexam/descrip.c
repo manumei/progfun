@@ -5,36 +5,59 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
   int n, s;
   scanf("%d %d", &n, &s);
 
-  // max digits is 964, max pairs is 482
-  int pairs[482][2];
-  int iter = 0;
+  char current[965];
+  char next[965];
 
-  if (s == 0) {
-    printf("%d", n);
-    return 0;
-  }
+  // turn starting number into a string
+  sprintf(current, "%d", n);
 
-  int len, ;
+  int len = strlen(current);
 
-  // how to represent final output -> for loop print the pairs
-  while (i < len) {
-    char digit = current[i];
-    int count = 0;
+  // apply transformation s times
+  for (int step = 0; step < s; step++) {
+    int i = 0;
+    int newLen = 0;
 
-    while (i < len && current[i] == digit) {
-      count++;
-      i++;
+    while (i < len) {
+      char digit = current[i];
+      int count = 0;
+
+      // count how many identical digits in a row
+      while (i < len && current[i] == digit) {
+        count++;
+        i++;
+      }
+
+      // write the count into next[]
+      char countStr[10];
+      sprintf(countStr, "%d", count);
+
+      for (int j = 0; countStr[j] != '\0'; j++) {
+        next[newLen] = countStr[j];
+        newLen++;
+      }
+
+      // write the digit itself
+      next[newLen] = digit;
+      newLen++;
     }
 
-    // append count
-    // append digit
+    // terminate next as a proper string
+    next[newLen] = '\0';
+
+    // copy next back into current
+    strcpy(current, next);
+
+    len = newLen;
   }
-}
-return 0;
+
+  printf("%s\n", current);
+
+  return 0;
 }
