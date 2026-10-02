@@ -5,6 +5,15 @@
 
 /* Description:
     Divide two polynomials
+
+  divide:
+  get leading term of F(X), divide by leading of G(X), get qu0(x) from it
+  append qu0(x) to the quotient Q(x)
+  do f1(x) = F(X) - qu0(x)*G(X)
+  then f1(x)[lead] / G(X)[lead] -> qu1(x)
+  append qu1(x) to the quotient Q(x)
+  then f2(x) = f1(x) - qu1(x)*G(X)
+  continue until F(X)[lead][exp] < G(X)[lead][exp]
 */
 
 #include <ctype.h>
@@ -114,15 +123,6 @@ int main(int argc, char *argv[]) {
 
   // coeffs pol2
   int highExpPol2 = updateCoefs(cfsP2, &c);
-
-  // divide:
-  // get leading term of F(X), divide by leading of G(X), get qu0(x) from it
-  // append qu0(x) to the quotient Q(x)
-  // do f1(x) = F(X) - qu0(x)*G(X)
-  // then f1(x)[lead] / G(X)[lead] -> qu1(x)
-  // append qu1(x) to the quotient Q(x)
-  // then f2(x) = f1(x) - qu1(x)*G(X)
-  // continue until F(X)[lead][exp] < G(X)[lead][exp]
 
   // division
   bool divisible = true;
