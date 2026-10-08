@@ -6,14 +6,14 @@
 /* Description:
     Divide two polynomials
 
-  divide:
-  get leading term of F(X), divide by leading of G(X), get qu0(x) from it
-  append qu0(x) to the quotient Q(x)
-  do f1(x) = F(X) - qu0(x)*G(X)
-  then f1(x)[lead] / G(X)[lead] -> qu1(x)
-  append qu1(x) to the quotient Q(x)
-  then f2(x) = f1(x) - qu1(x)*G(X)
-  continue until F(X)[lead][exp] < G(X)[lead][exp]
+    division:
+    // get leading term of F(X), divide by leading of G(X), get qu0(x) from it
+    // append qu0(x) to the quotient Q(x)
+    // do f1(x) = F(X) - qu0(x)*G(X)
+    // then f1(x)[lead] / G(X)[lead] -> qu1(x)
+    // append qu1(x) to the quotient Q(x)
+    // then f2(x) = f1(x) - qu1(x)*G(X)
+    // continue until F(X)[lead][exp] < G(X)[lead][exp]
 */
 
 #include <ctype.h>
@@ -143,11 +143,6 @@ int main(int argc, char *argv[]) {
     int quotermExp = highExpPol1 - highExpPol2;
     coeffsQuot[quotermExp] += quotermCoef; // append term
 
-    // new f
-    // multiplying Pol 2 by qu(x) to subtract from Pol 1
-    // is moving to the lower side the exp index of Pol 2
-    // so for example if quExp=2, the x^63 term becomes x^65, so to subtract
-    // from Pol1[65], we take the exp power 2 places higher to match
     for (int i = 0; i + quotermExp <= 100; i++) {
       int newExp = i + quotermExp;
       cfsP1[newExp] -= quotermCoef * (cfsP2[i]);
