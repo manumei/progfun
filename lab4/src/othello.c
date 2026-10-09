@@ -7,68 +7,89 @@
     TODO:
 */
 
-#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+bool withinBounds(int r, int c) { return (r >= 0 && r < 8 && c >= 0 && c < 8); }
 
 int main(int argc, char *argv[]) {
   char row;
   int col;
 
-  // starting board
-  bool board[8][8];
-  board[3][3] = true;  // W
-  board[4][4] = true;  // W
-  board[3][4] = false; // B
-  board[4][3] = false; // B
+  // starting board: 0 = empty, B = black, W = white
+  char board[8][8] = {0};
+
+  board[3][3] = 'W';
+  board[4][4] = 'W';
+  board[3][4] = 'B';
+  board[4][3] = 'B';
 
   // manage turns
   int turnNum = 0;
-  bool turn;
+  char turn;
 
   while (scanf(" %c%d", &row, &col) == 2) {
     // indices for board
-    int r = row - 'a';
-    int c = col - 1;
-    turn = (turnNum % 2); // Black (false) or White (true)
+    int r = col - 1;
+    int c = row - 'a';
 
-    // move
+    // play
+    turn = (turnNum % 2 == 0) ? 'B' : 'W';
     board[r][c] = turn;
 
-    // check neighbors, link=0, then for each neighbor
-    // neighbors are
-    // board[r-1][c-1]
-    // board[r-1][c]
-    // board[r-1][c+1]
-    // board[r][c-1]
-    // board[r][c+1]
-    // board[r+1][c-1]
-    // board[r+1][c]
-    // board[r+1][c+1]
+    for (int i = r - 1; i <= r + 1; i++) {
+      for (int j = c - 1; j <= c + 1; j++) {
 
-    bool diff, curr, neig;
-    int dir[2];
-    for (int i = r - 1; i == r + 1; i++) {
-      for (int j = c - 1; j == c + 1; j++)
-        if ((i == r && c == j) || (r == 0) || (r == 7) || (c == 0) ||
-            (c == 7)) {
-          curr = board[i][j];
-          neig = board[r][c];
-          // if i > r, dir is row++, if i < r, dir is row--, same for j & col
-          dir[0] = i - r;
-          dir[1] = j - c;
+        // skip itself
+        if (i == r && j == c)
+          continue;
 
-          while (curr != neig) {
+        // bounds
+        if (!withinBounds(i, j))
+          continue;
+
+        // dir to follow on the neighbor to enclose
+        int dir[2];
+        dir[0] = i - r;
+        dir[1] = j - c;
+
+        int newr = i;
+        int newc = j;
+        int link = 0;
+        bool flips = false;
+
+        // walk through consecutive opponent stones
+        while (withinBounds(newr, newc) && board[newr][newc] != 0 &&
+               board[newr][newc] != turn) {
+          link++;
+          newr += dir[0];
+          newc += dir[1];
+        }
+
+        // check if it closed with a same-color
+        if (link > 0 && withinBounds(newr, newc) && board[newr][newc] == turn) {
+          flips = true;
+        }
+
+        if (flips) {
+          for (int f = 1; f <= link; f++) {
+            board[r + (f * dir[0])][c + (f * dir[1])] = turn;
           }
         }
+      }
     }
-
-    // if neighbor!=current -> link++ and check its same-dir neighbor
-    // if neighbor==current -> if link>0, then go back the link and flip em
-    // can do this with a while(neighbor!=current)
-    turn++;
+    turnNum++;
   }
 
+  // Print the final board.
+  for (int i = 0; i < 8; i++) {
+    printf("%d", i + 1);
+    for (int j = 0; j < 8; j++) {
+      printf("%c", board[i][j] ? board[i][j] : '.');
+    }
+    printf("\n");
+  }
+  printf(" abcdefgh\n");
   return 0;
 }
