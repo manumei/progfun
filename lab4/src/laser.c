@@ -1,10 +1,10 @@
 /* file : laser.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : TODO: */
+/* date : 09-10-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic laser.c -o laser */
 
 /* Description:
-    TODO:
+    Trace path of a laser
 */
 
 #include <stdio.h>
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
   // input
   int n, m;
   scanf("%d %d", &n, &m);
-  char board[n][m];
+  char(*board)[m] = malloc(n * sizeof(*board));
   int laser[3]; // [0] stores direction, [1] & [2] store position
 
   for (int i = 0; i < n; i++) {
@@ -97,5 +97,6 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
   }
+  free(board);
   return 0;
 }
