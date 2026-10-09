@@ -42,12 +42,14 @@ int main(int argc, char *argv[]) {
       for (int j = c - 1; j <= c + 1; j++) {
 
         // skip itself
-        if (i == r && j == c)
+        if (i == r && j == c) {
           continue;
+        }
 
         // bounds
-        if (!withinBounds(i, j))
+        if (!withinBounds(i, j)) {
           continue;
+        }
 
         // dir to follow on the neighbor to enclose
         int dir[2];
