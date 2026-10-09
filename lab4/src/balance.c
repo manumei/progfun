@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
       printf("%d %d\n", balances[h][0], balances[h][1]);
     }
   }
+  free(presum);
   free(board);
 
   return 0;
