@@ -11,6 +11,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+void *safeMalloc(int n) {
+  void *p = malloc(n);
+  if (p == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return p;
+}
+
+char **makeCharArray2D(int width, int height) {
+  char **arr = safeMalloc(height * sizeof(char *));
+  arr[0] = safeMalloc(width * height * sizeof(char));
+  for (int row = 1; row < height; row++) {
+    arr[row] = arr[row - 1] + width;
+  }
+  return arr;
+}
+
+/* free a 2D dynamic array */
+void destroyCharArray2D(char **arr) {
+  free(arr[0]);
+  free(arr);
+}
+
 char newDirection(char dir, int mirror) {
   if (dir == '^') { // laser comes from below
     return (mirror == 1) ? '>' : '<';
@@ -24,7 +48,7 @@ char newDirection(char dir, int mirror) {
   return 0;
 }
 
-int laserMove(int laser[3], int n, int m, char board[n][m]) {
+int laserMove(int laser[3], int n, int m, char **board) {
   char dir = laser[0];
   int row = laser[1];
   int col = laser[2];
@@ -67,7 +91,7 @@ int main(int argc, char *argv[]) {
   // input
   int n, m;
   scanf("%d %d", &n, &m);
-  char(*board)[m] = malloc(n * sizeof(*board));
+  char **board = makeCharArray2D(m, n);
   int laser[3]; // [0] stores direction, [1] & [2] store position
 
   for (int i = 0; i < n; i++) {
@@ -97,6 +121,6 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
   }
-  free(board);
+  destroyCharArray2D(board);
   return 0;
 }

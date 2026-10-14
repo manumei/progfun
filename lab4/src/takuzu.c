@@ -1,6 +1,6 @@
 /* file : takuzu.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : 09-10-2026 */
+/* date : 14-10-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic takuzu.c -o takuzu */
 
 /* Description:
@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void *safeMalloc(int n) {
   void *p = malloc(n);
@@ -32,7 +33,7 @@ char **makeCharArray2D(int width, int height) {
 }
 
 /* free a 2D dynamic array */
-void destroyIntArray2D(char **arr) {
+void destroyCharArray2D(char **arr) {
   free(arr[0]);
   free(arr);
 }
@@ -56,11 +57,7 @@ int main(int argc, char *argv[]) {
     changed = false;
 
     // Copy board to next
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        next[i][j] = board[i][j];
-      }
-    }
+    memcpy(next[0], board[0], (size_t)n * m * sizeof(char));
 
     // Check horizontal groups of 3
     for (int i = 0; i < n; i++) {
@@ -68,6 +65,9 @@ int main(int argc, char *argv[]) {
         char a = board[i][j];
         char b = board[i][j + 1];
         char c = board[i][j + 2];
+
+        if (a != '.' && b != '.' && c != '.')
+          continue;
 
         // N-N-empty
         if (a != '.' && a == b && c == '.') {
@@ -95,6 +95,9 @@ int main(int argc, char *argv[]) {
         char a = board[i][j];
         char b = board[i + 1][j];
         char c = board[i + 2][j];
+
+        if (a != '.' && b != '.' && c != '.')
+          continue;
 
         // N-N-empty
         if (a != '.' && a == b && c == '.') {
@@ -126,7 +129,10 @@ int main(int argc, char *argv[]) {
     next = temp;
   }
 
-  printf("%d", iters);
+  printf("%d\n", iters);
+
+  destroyCharArray2D(board);
+  destroyCharArray2D(next);
 
   return 0;
 }

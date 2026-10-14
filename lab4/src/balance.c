@@ -10,11 +10,35 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+void *safeMalloc(int n) {
+  void *p = malloc(n);
+  if (p == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return p;
+}
+
+int **makeIntArray2D(int width, int height) {
+  int **arr = safeMalloc(height * sizeof(int *));
+  arr[0] = safeMalloc(width * height * sizeof(int));
+  for (int row = 1; row < height; row++) {
+    arr[row] = arr[row - 1] + width;
+  }
+  return arr;
+}
+
+void destroyIntArray2D(int **arr) {
+  free(arr[0]);
+  free(arr);
+}
 
 int main(int argc, char *argv[]) {
   int m, n;
   scanf("%d %d", &n, &m);
-  int(*board)[m] = malloc(n * sizeof(*board));
+  int **board = makeIntArray2D(m, n);
 
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
@@ -27,7 +51,8 @@ int main(int argc, char *argv[]) {
   int count = 0;
 
   // m+1 and n+1 to add padding of zeros (avoid edge cases i,j=0)
-  int(*presum)[m + 1] = calloc(n + 1, sizeof(*presum));
+  int **presum = makeIntArray2D(m + 1, n + 1);
+  memset(presum[0], 0, (size_t)(n + 1) * (m + 1) * sizeof(int));
 
   // do all the sums in O(n*m)
   for (int i = 1; i <= n; i++) {
@@ -62,8 +87,8 @@ int main(int argc, char *argv[]) {
       printf("%d %d\n", balances[h][0], balances[h][1]);
     }
   }
-  free(presum);
-  free(board);
+  destroyIntArray2D(presum);
+  destroyIntArray2D(board);
 
   return 0;
 }
