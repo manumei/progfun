@@ -1,6 +1,6 @@
 /* file : enigma.c */
 /* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
-/* date : TODO: */
+/* date : 20-10-2026 */
 /* compile: gcc -std=c99 -Wall -pedantic enigma.c -o enigma */
 
 /* Description:
