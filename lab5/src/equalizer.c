@@ -43,35 +43,33 @@ int main(int argc, char *argv[]) {
     scanf("%d", &arr[i]);
   }
 
-  bool changed = true;
-  int neighbor;
-  while (changed) {
-    changed = false;
-    for (int i = 0; i < n; i++) {
-      if ((i > 0 && (arr[i] - arr[i - 1] >= 2)) ||
-          (i < n - 1 && (arr[i] - arr[i + 1] >= 2))) {
+  int i = 0; // index(not iter whole thing every time, only from relevant point)
+  while (i < n) {
+    if ((i > 0 && arr[i] - arr[i - 1] >= 2) ||
+        (i < n - 1 && arr[i] - arr[i + 1] >= 2)) {
 
-        if (i == 0) {
-          neighbor = 1;
-        } else if (i == n - 1) {
-          neighbor = n - 2;
-        } else if (arr[i - 1] <= arr[i + 1]) {
-          neighbor = i - 1;
-        } else {
-          neighbor = i + 1;
-        }
-
-        // decrease & add
-        arr[i]--;
-        arr[neighbor]++;
-
-        // re read the array (one step at a time)
-        changed = true;
-        break;
+      // find smallest neighbor, either edge element or left if tie
+      int neighbor;
+      if (i == 0) {
+        neighbor = 1;
+      } else if (i == n - 1) {
+        neighbor = n - 2;
+      } else if (arr[i - 1] <= arr[i + 1]) {
+        neighbor = i - 1;
+      } else {
+        neighbor = i + 1;
       }
-    }
-    if (!changed) {
-      break;
+
+      // decrease & add
+      arr[i]--;
+      arr[neighbor]++;
+
+      // gotta check if can be equalized again after new values
+      if (i > 0) {
+        i--;
+      }
+    } else { // no equalizing here NOR earlier, move forward
+      i++;
     }
   }
 
