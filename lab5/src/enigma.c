@@ -4,7 +4,7 @@
 /* compile: gcc -std=c99 -Wall -pedantic enigma.c -o enigma */
 
 /* Description:
-    TODO:
+    enigma like alan
 */
 
 #include <stdio.h>
