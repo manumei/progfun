@@ -2,6 +2,7 @@
 build/
 bin/
 obj/
+/lab6/build/
 
 # Generated Dafny/C# artifacts
 *.dll
