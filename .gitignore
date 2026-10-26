@@ -1,0 +1,10 @@
+# Generated builds
+build/
+bin/
+obj/
+
+# Generated Dafny/C# artifacts
+*.dll
+*.pdb
+*.deps.json
+*.runtimeconfig.json
