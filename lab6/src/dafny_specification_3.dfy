@@ -1,3 +1,3 @@
-// Exercise 4: Dafny specification 3
-// Return a positive y equal to 2*x + 1 or -2*x.
-// TODO: Implement this exercise.
+/* file : dafny_specification_3.dfy */
+/* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
+/* date : 07-11-2026 */

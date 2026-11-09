@@ -1,3 +1,3 @@
-// Exercise 10: Recurrence to iteration
-// Compute the recurrence iteratively using a while loop.
-// TODO: Implement this exercise.
+/* file : recurrence_to_iteration.dfy */
+/* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
+/* date : 07-11-2026 */

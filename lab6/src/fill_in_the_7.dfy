@@ -1,3 +1,3 @@
-// Exercise 7: Fill in the ??
-// Find a closed expression for the recurrence and its proof invariant.
-// TODO: Implement this exercise without auxiliary statements.
+/* file : fill_in_the_7.dfy */
+/* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
+/* date : 07-11-2026 */

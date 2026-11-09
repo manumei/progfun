@@ -1,3 +1,3 @@
-// Exercise 5: Dafny specification 4
-// Return the ghost value X from the given precondition on x.
-// TODO: Implement this exercise.
+/* file : dafny_specification_4.dfy */
+/* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
+/* date : 07-11-2026 */

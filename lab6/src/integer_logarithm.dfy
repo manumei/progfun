@@ -1,3 +1,3 @@
-// Exercise 9: Integer logarithm
-// Implement the integer logarithm using a while loop and invariant.
-// TODO: Implement this exercise.
+/* file : integer_logarithm.dfy */
+/* author : Manuel Meiriño (m.meirino.ferro@student.rug.nl) */
+/* date : 07-11-2026 */
