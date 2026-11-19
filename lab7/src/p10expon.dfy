@@ -23,7 +23,7 @@ lemma expSquare(a: nat, k: nat)
       exp(a, 2*0);
     }
   } else {
-    expSquare(a, k-1);
+    expSquare(a, k-1); // induction
   }
 }
 
@@ -40,7 +40,7 @@ lemma equalExp(a: nat, e: nat)
       fastExp(a, e);
     }
   } else if e % 2 != 0 {
-    // e is odd (so e > 0)
+    // e odd
     calc {
       exp(a, e);
     == // definition of exp for e>0
@@ -51,7 +51,7 @@ lemma equalExp(a: nat, e: nat)
       fastExp(a, e);
     }
   } else {
-    // e is even and e > 0
+    // e even
     calc {
       exp(a, e);
     == // definition of exp for e>0
